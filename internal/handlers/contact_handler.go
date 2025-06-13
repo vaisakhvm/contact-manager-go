@@ -1,8 +1,8 @@
 package handlers
 
 import (
-	"contact-manager-go/internals/models"
-	"contact-manager-go/internals/services"
+	"contact-manager-go/internal/models"
+	"contact-manager-go/internal/services"
 	"encoding/json"
 	"net/http"
 	"strconv"

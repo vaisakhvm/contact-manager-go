@@ -1,9 +1,9 @@
 package main
 
 import (
-	"contact-manager-go/internals/handlers"
-	"contact-manager-go/internals/repository"
-	"contact-manager-go/internals/services"
+	"contact-manager-go/internal/handlers"
+	"contact-manager-go/internal/repository"
+	"contact-manager-go/internal/services"
 	"log"
 	"net/http"
 )

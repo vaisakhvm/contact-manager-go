@@ -1,6 +1,6 @@
 package repository
 
-import "contact-manager-go/internals/models"
+import "contact-manager-go/internal/models"
 
 type ContactRepository interface {
 	Add(contact models.Contact) models.Contact

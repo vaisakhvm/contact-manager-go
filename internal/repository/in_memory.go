@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"contact-manager-go/internals/models"
+	"contact-manager-go/internal/models"
 	"slices"
 	"sync"
 )

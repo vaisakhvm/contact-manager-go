@@ -1,8 +1,8 @@
 package services
 
 import (
-	"contact-manager-go/internals/models"
-	"contact-manager-go/internals/repository"
+	"contact-manager-go/internal/models"
+	"contact-manager-go/internal/repository"
 	"fmt"
 )
 
@@ -22,7 +22,7 @@ func (s *ContactService) ListContacts() []models.Contact {
 	return s.repo.List()
 }
 
-func (s *ContactService) GetByID(id int) (models.Contact, error)  {
+func (s *ContactService) GetByID(id int) (models.Contact, error) {
 	contact, found := s.repo.GetByID(id)
 	if !found {
 		return models.Contact{}, fmt.Errorf("contact with ID %d not found", id)
