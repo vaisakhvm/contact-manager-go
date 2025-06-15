@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"contact-manager-go/internal/models"
+	"contact-manager-go/internal/domain"
 	"slices"
 	"sync"
 )
@@ -9,17 +9,17 @@ import (
 type InMemoryRepo struct {
 	mu       sync.Mutex
 	nextID   int
-	contacts []models.Contact
+	contacts []domain.Contact
 }
 
 func NewInMemoryRepo() *InMemoryRepo {
 	return &InMemoryRepo{
-		contacts: make([]models.Contact, 0),
+		contacts: make([]domain.Contact, 0),
 		nextID:   1,
 	}
 }
 
-func (r *InMemoryRepo) Add(contact models.Contact) models.Contact {
+func (r *InMemoryRepo) Add(contact domain.Contact) domain.Contact {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 
@@ -29,14 +29,14 @@ func (r *InMemoryRepo) Add(contact models.Contact) models.Contact {
 	return contact
 }
 
-func (r *InMemoryRepo) List() []models.Contact {
+func (r *InMemoryRepo) List() []domain.Contact {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 
 	return r.contacts
 }
 
-func (r *InMemoryRepo) GetByID(id int) (models.Contact, bool) {
+func (r *InMemoryRepo) GetByID(id int) (domain.Contact, bool) {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 
@@ -45,7 +45,7 @@ func (r *InMemoryRepo) GetByID(id int) (models.Contact, bool) {
 			return contact, true
 		}
 	}
-	return models.Contact{}, false
+	return domain.Contact{}, false
 }
 
 func (r *InMemoryRepo) Delete(id int) bool {

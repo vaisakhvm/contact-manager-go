@@ -1,23 +1,23 @@
 package handlers
 
 import (
-	"contact-manager-go/internal/models"
-	"contact-manager-go/internal/services"
+	"contact-manager-go/internal/domain"
+	"contact-manager-go/internal/usecase"
 	"encoding/json"
 	"net/http"
 	"strconv"
 )
 
 type ContactHandler struct {
-	svc *services.ContactService
+	svc *usecase.ContactUsecase
 }
 
-func NewContactHandler(service *services.ContactService) *ContactHandler {
+func NewContactHandler(service *usecase.ContactUsecase) *ContactHandler {
 	return &ContactHandler{svc: service}
 }
 
 func (h *ContactHandler) AddContact(w http.ResponseWriter, r *http.Request) {
-	var newContact models.Contact
+	var newContact domain.Contact
 	err := json.NewDecoder(r.Body).Decode(&newContact)
 	if err != nil {
 		http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)

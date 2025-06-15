@@ -3,14 +3,14 @@ package main
 import (
 	"contact-manager-go/internal/handlers"
 	"contact-manager-go/internal/repository"
-	"contact-manager-go/internal/services"
+	"contact-manager-go/internal/usecase"
 	"log"
 	"net/http"
 )
 
 func main() {
 	repo := repository.NewInMemoryRepo()
-	svc := services.NewContactService(repo)
+	svc := usecase.NewContactUsecase(repo)
 	handler := handlers.NewContactHandler(svc)
 
 	http.HandleFunc("/add", handler.AddContact)
