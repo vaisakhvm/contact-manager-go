@@ -6,20 +6,20 @@ import (
 	"sync"
 )
 
-type InMemoryRepository struct {
+type InMemoryContactRepository struct {
 	mu       sync.Mutex
 	nextID   int
 	contacts []domain.Contact
 }
 
-func NewInMemoryRepository() *InMemoryRepository {
-	return &InMemoryRepository{
+func NewInMemoryContactRepository() *InMemoryContactRepository {
+	return &InMemoryContactRepository{
 		contacts: make([]domain.Contact, 0),
 		nextID:   1,
 	}
 }
 
-func (r *InMemoryRepository) Add(contact domain.Contact) domain.Contact {
+func (r *InMemoryContactRepository) Add(contact domain.Contact) domain.Contact {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 
@@ -29,14 +29,14 @@ func (r *InMemoryRepository) Add(contact domain.Contact) domain.Contact {
 	return contact
 }
 
-func (r *InMemoryRepository) List() []domain.Contact {
+func (r *InMemoryContactRepository) List() []domain.Contact {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 
 	return r.contacts
 }
 
-func (r *InMemoryRepository) GetByID(id int) (domain.Contact, bool) {
+func (r *InMemoryContactRepository) GetByID(id int) (domain.Contact, bool) {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 
@@ -48,7 +48,7 @@ func (r *InMemoryRepository) GetByID(id int) (domain.Contact, bool) {
 	return domain.Contact{}, false
 }
 
-func (r *InMemoryRepository) Delete(id int) bool {
+func (r *InMemoryContactRepository) Delete(id int) bool {
 	for i, contact := range r.contacts {
 		if contact.ID == id {
 			r.contacts = slices.Delete(r.contacts, i, i+1)

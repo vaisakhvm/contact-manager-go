@@ -1,25 +1,24 @@
 package main
 
 import (
-	"contact-manager-go/internal/contact/delivery/rest"
-	"contact-manager-go/internal/contact/repository/inmemory"
-	"contact-manager-go/internal/contact/usecase"
+	contactRest "contact-manager-go/internal/contact/delivery/rest"
+	contactInMemoryRepository "contact-manager-go/internal/contact/repository/inmemory"
+	contactUsecase "contact-manager-go/internal/contact/usecase"
 	"log"
 	"net/http"
 )
 
 func main() {
-	repo := inmemory.NewInMemoryRepository()
-	svc := usecase.NewContactUsecase(repo)
-	handler := rest.NewContactHandler(svc)
+	mux := http.NewServeMux()
 
-	http.HandleFunc("/add", handler.AddContact)
-	http.HandleFunc("/list", handler.ListContacts)
-	http.HandleFunc("/get", handler.GetContact)
-	http.HandleFunc("/delete", handler.DeleteContact)
+	//Contact wiring
+	contactRepository := contactInMemoryRepository.NewInMemoryContactRepository()
+	contactUsecase := contactUsecase.NewContactUsecase(contactRepository)
+	contactHandler := contactRest.NewContactHandler(contactUsecase)
+	contactRest.RegisterRoutes(mux, contactHandler)
 
 	log.Println("Server is listening on :8080")
-	if err := http.ListenAndServe(":8080", nil); err != nil {
+	if err := http.ListenAndServe(":8080", mux); err != nil {
 		log.Fatal(err)
 	}
 }
