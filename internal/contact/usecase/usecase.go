@@ -1,16 +1,15 @@
 package usecase
 
 import (
-	"contact-manager-go/internal/domain"
-	"contact-manager-go/internal/repository"
+	"contact-manager-go/domain"
 	"fmt"
 )
 
 type ContactUsecase struct {
-	repo repository.ContactRepository
+	repo domain.ContactRepository
 }
 
-func NewContactUsecase(repo repository.ContactRepository) *ContactUsecase {
+func NewContactUsecase(repo domain.ContactRepository) *ContactUsecase {
 	return &ContactUsecase{repo: repo}
 }
 

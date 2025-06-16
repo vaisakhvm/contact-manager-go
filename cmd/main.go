@@ -1,17 +1,17 @@
 package main
 
 import (
-	"contact-manager-go/internal/handlers"
-	"contact-manager-go/internal/repository"
-	"contact-manager-go/internal/usecase"
+	"contact-manager-go/internal/contact/delivery/rest"
+	"contact-manager-go/internal/contact/repository/inmemory"
+	"contact-manager-go/internal/contact/usecase"
 	"log"
 	"net/http"
 )
 
 func main() {
-	repo := repository.NewInMemoryRepo()
+	repo := inmemory.NewInMemoryRepository()
 	svc := usecase.NewContactUsecase(repo)
-	handler := handlers.NewContactHandler(svc)
+	handler := rest.NewContactHandler(svc)
 
 	http.HandleFunc("/add", handler.AddContact)
 	http.HandleFunc("/list", handler.ListContacts)

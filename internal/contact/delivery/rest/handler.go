@@ -1,8 +1,8 @@
-package handlers
+package rest
 
 import (
-	"contact-manager-go/internal/domain"
-	"contact-manager-go/internal/usecase"
+	"contact-manager-go/domain"
+	"contact-manager-go/internal/contact/usecase"
 	"encoding/json"
 	"net/http"
 	"strconv"

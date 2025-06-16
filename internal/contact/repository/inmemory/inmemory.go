@@ -1,25 +1,25 @@
-package repository
+package inmemory
 
 import (
-	"contact-manager-go/internal/domain"
+	"contact-manager-go/domain"
 	"slices"
 	"sync"
 )
 
-type InMemoryRepo struct {
+type InMemoryRepository struct {
 	mu       sync.Mutex
 	nextID   int
 	contacts []domain.Contact
 }
 
-func NewInMemoryRepo() *InMemoryRepo {
-	return &InMemoryRepo{
+func NewInMemoryRepository() *InMemoryRepository {
+	return &InMemoryRepository{
 		contacts: make([]domain.Contact, 0),
 		nextID:   1,
 	}
 }
 
-func (r *InMemoryRepo) Add(contact domain.Contact) domain.Contact {
+func (r *InMemoryRepository) Add(contact domain.Contact) domain.Contact {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 
@@ -29,14 +29,14 @@ func (r *InMemoryRepo) Add(contact domain.Contact) domain.Contact {
 	return contact
 }
 
-func (r *InMemoryRepo) List() []domain.Contact {
+func (r *InMemoryRepository) List() []domain.Contact {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 
 	return r.contacts
 }
 
-func (r *InMemoryRepo) GetByID(id int) (domain.Contact, bool) {
+func (r *InMemoryRepository) GetByID(id int) (domain.Contact, bool) {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 
@@ -48,7 +48,7 @@ func (r *InMemoryRepo) GetByID(id int) (domain.Contact, bool) {
 	return domain.Contact{}, false
 }
 
-func (r *InMemoryRepo) Delete(id int) bool {
+func (r *InMemoryRepository) Delete(id int) bool {
 	for i, contact := range r.contacts {
 		if contact.ID == id {
 			r.contacts = slices.Delete(r.contacts, i, i+1)
