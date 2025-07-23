@@ -41,8 +41,7 @@ func (h *ContactHandler) ListContacts(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(contactList)
 }
 
-func (h *ContactHandler) GetContact(w http.ResponseWriter, r *http.Request) {
-	idStr := r.URL.Query().Get("id")
+func (h *ContactHandler) GetContact(w http.ResponseWriter, r *http.Request, idStr string) {
 	id, err := strconv.Atoi(idStr)
 
 	if err != nil {
@@ -60,8 +59,7 @@ func (h *ContactHandler) GetContact(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(contact)
 }
 
-func (h *ContactHandler) DeleteContact(w http.ResponseWriter, r *http.Request) {
-	idStr := r.URL.Query().Get("id")
+func (h *ContactHandler) DeleteContact(w http.ResponseWriter, r *http.Request, idStr string) {
 	id, err := strconv.Atoi(idStr)
 
 	err = h.svc.Delete(id)
